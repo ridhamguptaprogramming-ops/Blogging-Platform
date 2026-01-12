@@ -1,93 +1,91 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>The Side Blogger — Clone</title>
+  <meta charset="UTF-8">
+  <title>Education Website</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css">
 
-  <link rel="stylesheet" href="styles.css" />
-  <meta name="description" content="Demo clone of The Side Blogger hero & header — static HTML/CSS" />
+  <!-- FONT -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 <body>
-  <!-- Top utility bar -->
-  <div class="topbar">
-    <div class="container topbar-inner">
-      <div class="top-left">NEWSLETTER</div>
-      <div class="top-right">VAULT LOGIN</div>
-    </div>
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="logo">EduVision</div>
+  <ul>
+    <li><a href="#home">Home</a></li>
+    <li><a href="#vision">Vision</a></li>
+    <li><a href="#features">Features</a></li>
+    <li><a class="btn" href="#features">Get Started</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<header class="hero" id="home">
+  <div class="overlay"></div>
+
+  <div class="hero-content">
+    <h1>Learn Smarter<br><span>Together</span></h1>
+    <p>Interactive learning for students and teachers.</p>
+    
+    <a href="#vision" class="hero-btn">Explore Now →</a>
+  </div>
+</header>
+
+<!-- VISION -->
+<section class="vision" id="vision">
+  <div class="vision-left">
+    <h2>Our Vision</h2>
+    <p>
+      We believe education should be simple, visual and collaborative.
+      Our platform helps learners grow with clarity and creativity.
+    </p>
+
+    <!-- FIXED BUTTON -->
+    <a href="editor.html" class="arrow-btn">→</a>
   </div>
 
-  <!-- Header -->
-  <header class="site-header">
-    <div class="container header-row">
-      <div class="logo">
-        <div class="logo-stack">
-          <span class="logo-line small">THE</span>
-          <span class="logo-line big">SIDE</span>
-          <span class="logo-line small">BLOGGER</span>
-        </div>
-      </div>
+  <div class="vision-right">
+    <img src="/public/images/2.jpg" alt="Vision Image">
+  </div>
+</section>
 
-      <nav class="main-nav" aria-label="Main navigation">
-        <a href="#">Blog</a>
-        <a href="#">Newsletter ▾</a>
-        <a href="#">Courses ▾</a>
-        <a href="#">Products</a>
-        <a href="#">Book a Call</a>
-      </nav>
+<!-- FEATURES -->
+<section class="features" id="features">
+  <h2>What We Offer</h2>
 
-      <div class="header-cta">
-        <button class="join-cta">Join The Vault</button>
-      </div>
+  <div class="cards">
+    <div class="card">
+      <img src="images/1.jpg" alt="Live Learning">
+      <h3>Do you believe in premonitions?</h3>
+      <p>First lesson of the year: Do not embed this in your emails.</p>
+      <a href="editor.html" class="arrow-btn">→</a>
     </div>
-  </header>
 
-  <!-- Hero -->
-  <section class="hero">
-    <div class="hero-overlay"></div>
-    <div class="container hero-inner">
-      <h1 class="hero-title">I'll help you turn your expertise into income<br>with your blog and newsletter.</h1>
-      <p class="hero-sub">For daily-ish emails from me with offers and insights:</p>
-
-      <form id="subscribe-form" class="hero-form" onsubmit="return handleSubscribe(event);">
-        <input type="text" id="fname" name="fname" placeholder="First Name" />
-        <input type="email" id="email" name="email" placeholder="Email" required />
-        <button type="submit" class="subscribe-btn">SUBSCRIBE</button>
-      </form>
-
-      <div class="sponsors">
-        <div class="sponsors-label">Featured sponsors and affiliates:</div>
-        <div class="sponsor-icons" aria-hidden="true">
-          <img src="https://placehold.co/48x48/ffffff/9a8f8d?text=G" alt="">
-          <img src="https://placehold.co/48x48/ffffff/9a8f8d?text=K" alt="">
-          <img src="https://placehold.co/48x48/ffffff/9a8f8d?text=C" alt="">
-          <img src="https://placehold.co/48x48/ffffff/9a8f8d?text=Can" alt="">
-          <div class="sponsor-more">+</div>
-        </div>
-      </div>
+    <div class="card">
+      <img src="images/2.jpg" alt="Smart Ideas">
+      <h3>Smart Ideas</h3>
+      <p>Visual explanations that make sense.</p>
+      <a href="editor.html" class="arrow-btn">→</a>
     </div>
-  </section>
 
-  <!-- Intro section -->
-  <main class="container main-block">
-    <section class="intro">
-      <h2 class="intro-eyebrow">Hey there. I'm <span class="author-name">Maliha.</span></h2>
-      <p class="intro-text">I help creators add an extra 5- to 6-figure income sharing their knowledge and expertise with blogs and newsletters.</p>
-    </section>
-  </main>
-
-  <!-- Floating CTA -->
-  <button class="floating-cta" aria-label="Join the Vault">Join the Vault</button>
-
-  <footer class="site-footer">
-    <div class="container">
-      <p>© 2026 The Side Blogger — Demo clone</p>
+    <div class="card">
+      <img src="images/1.jpg" alt="Collaboration">
+      <h3>Collaboration</h3>
+      <p>Learn and grow together.</p>
+      <a href="editor.html" class="arrow-btn">→</a>
     </div>
-  </footer>
+  </div>
+</section>
 
-  <script src="script.js"></script>
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 EduVision. All rights reserved.</p>
+</footer>
+
+<script src="script.js"></script>
 </body>
 </html>
