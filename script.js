@@ -9,3 +9,7 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
   { id: 1, title: "Post title", content: "Post content" },
   { id: 2, title: "Another post", content: "Text..." }
 ]
+document.getElementById("getStartedBtn").addEventListener("click", () => {
+  alert("Welcome! Let's get started 🚀");
+});
+
