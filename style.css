@@ -144,6 +144,22 @@ body {
   line-height: 1.7;
   color: #444;
 }
+.card-btn {
+  display: inline-block;
+  margin-top: 18px;
+  padding: 10px 22px;
+  background: #3ab7ff;
+  color: #fff;
+  border-radius: 22px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.card-btn:hover {
+  background: #249fe0;
+  transform: translateX(6px);
+}
 
 /* ARROW BUTTON */
 .arrow-btn {
@@ -326,7 +342,7 @@ footer {
   cursor: pointer;
 }
 
-/* MOBILE */
+/* MOBILE NAV */
 @media (max-width: 900px) {
   .hamburger {
     display: block;
@@ -334,7 +350,7 @@ footer {
 
   .nav-links {
     position: absolute;
-    top: 70px;
+    top: 80px;
     right: 0;
     background: #ffd166;
     width: 100%;
@@ -342,6 +358,7 @@ footer {
     gap: 20px;
     padding: 30px;
     display: none;
+    z-index: 999;
   }
 
   .nav-links.active {

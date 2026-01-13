@@ -194,23 +194,28 @@ body {
 </nav>
 
 <div class="editor-wrap">
+  <!-- TITLE -->
   <input id="title" placeholder="Blog title..." />
 
+  <!-- TOOLBAR -->
   <div class="toolbar">
     <button onclick="cmd('bold')">B</button>
     <button onclick="cmd('italic')">I</button>
     <button onclick="cmd('insertUnorderedList')">•</button>
     <button onclick="cmd('formatBlock','h2')">H2</button>
   </div>
+
+  <!-- TAGS -->
   <input
-  id="tags"
-  placeholder="Tags (comma separated e.g. Security, Cloud, AI)"
-  class="tags-input"
-/>
+    id="tags"
+    class="tags-input"
+    placeholder="Tags (comma separated e.g. Security, Cloud, AI)"
+  />
 
-
+  <!-- CONTENT -->
   <div id="content" class="editor" contenteditable></div>
 
+  <!-- PUBLISH -->
   <button class="publish" onclick="publish()">Publish Blog</button>
 </div>
 
