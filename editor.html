@@ -2,89 +2,218 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Education Website</title>
+  <title>Write Blog</title>
+  <meta name="description" content="Write and publish professional blogs on cybersecurity, cloud, and modern technology using VYONIC.">
+<meta name="robots" content="noindex,nofollow">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!-- CSS -->
   <link rel="stylesheet" href="style.css">
+  <style>
+    /* =========================
+   GLOBAL RESET
+========================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+}
 
-  <!-- FONT -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+body {
+  background: #f4f7fb;
+  color: #111;
+  min-height: 100vh;
+}
+
+/* =========================
+   NAVBAR
+========================= */
+.navbar {
+  background: #ffffff;
+  padding: 18px 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.06);
+}
+
+.logo {
+  font-size: 22px;
+  font-weight: 600;
+  color: #3ab7ff;
+}
+
+.nav-links {
+  list-style: none;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #111;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+/* =========================
+   EDITOR WRAPPER
+========================= */
+.editor-wrap {
+  max-width: 900px;
+  margin: 50px auto;
+  background: #ffffff;
+  padding: 40px;
+  border-radius: 22px;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.08);
+}
+
+/* =========================
+   TITLE INPUT
+========================= */
+#title {
+  width: 100%;
+  padding: 16px 18px;
+  font-size: 26px;
+  font-weight: 600;
+  border-radius: 14px;
+  border: 1px solid #e5e7eb;
+  outline: none;
+  margin-bottom: 20px;
+}
+
+#title::placeholder {
+  color: #9ca3af;
+}
+
+/* =========================
+   TAG INPUT
+========================= */
+.tags-input {
+  width: 100%;
+  padding: 12px 16px;
+  font-size: 15px;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  margin: 15px 0 25px;
+}
+
+.tags-input::placeholder {
+  color: #9ca3af;
+}
+
+/* =========================
+   TOOLBAR
+========================= */
+.toolbar {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.toolbar button {
+  padding: 8px 14px;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  background: #f9fafb;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.2s;
+}
+
+.toolbar button:hover {
+  background: #3ab7ff;
+  color: #fff;
+  border-color: #3ab7ff;
+}
+
+/* =========================
+   CONTENT EDITOR
+========================= */
+.editor {
+  width: 100%;
+  min-height: 300px;
+  padding: 18px;
+  border-radius: 16px;
+  border: 1px solid #e5e7eb;
+  font-size: 16px;
+  line-height: 1.7;
+  outline: none;
+}
+
+.editor:empty::before {
+  content: "Start writing your blog here...";
+  color: #9ca3af;
+}
+
+/* =========================
+   PUBLISH BUTTON
+========================= */
+.publish {
+  margin-top: 30px;
+  padding: 14px 34px;
+  border-radius: 30px;
+  border: none;
+  background: #3ab7ff;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.25s;
+}
+
+.publish:hover {
+  background: #249fe0;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 16px 30px;
+  }
+
+  .editor-wrap {
+    padding: 25px;
+    margin: 30px 15px;
+  }
+
+  #title {
+    font-size: 22px;
+  }
+}
+
+  </style>
 </head>
+
 <body>
-<!-- NAVBAR -->
+
 <nav class="navbar">
-  <div class="logo">EduVision</div>
-  <ul>
-    <li><a href="#home">Home</a></li>
-    <li><a href="#vision">Vision</a></li>
-    <li><a href="#features">Features</a></li>
-    <li><a class="btn" href="#features">Get Started</a></li>
+  <div class="logo">VYONIC</div>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
   </ul>
 </nav>
 
-<!-- HERO -->
-<header class="hero" id="home">
-  <div class="overlay"></div>
+<div class="editor-wrap">
+  <input id="title" placeholder="Blog title..." />
 
-  <div class="hero-content">
-    <h1>Learn Smarter<br><span>Together</span></h1>
-    <p>Interactive learning for students and teachers.</p>
-    
-    <a href="#vision" class="hero-btn">Explore Now →</a>
+  <div class="toolbar">
+    <button onclick="cmd('bold')">B</button>
+    <button onclick="cmd('italic')">I</button>
+    <button onclick="cmd('insertUnorderedList')">•</button>
+    <button onclick="cmd('formatBlock','h2')">H2</button>
   </div>
-</header>
+  <input
+  id="tags"
+  placeholder="Tags (comma separated e.g. Security, Cloud, AI)"
+  class="tags-input"
+/>
 
-<!-- VISION -->
-<section class="vision" id="vision">
-  <div class="vision-left">
-    <h2>Our Vision</h2>
-    <p>
-      We believe education should be simple, visual and collaborative.
-      Our platform helps learners grow with clarity and creativity.
-    </p>
 
-    <!-- FIXED BUTTON -->
-    <a href="editor.html" class="arrow-btn">→</a>
-  </div>
+  <div id="content" class="editor" contenteditable></div>
 
-  <div class="vision-right">
-    <img src="/public/images/2.jpg" alt="Vision Image">
-  </div>
-</section>
+  <button class="publish" onclick="publish()">Publish Blog</button>
+</div>
 
-<!-- FEATURES -->
-<section class="features" id="features">
-  <h2>What We Offer</h2>
-
-  <div class="cards">
-    <div class="card">
-      <img src="images/1.jpg" alt="Live Learning">
-      <h3>Do you believe in premonitions?</h3>
-      <p>First lesson of the year: Do not embed this in your emails.</p>
-      <a href="editor.html" class="arrow-btn">→</a>
-    </div>
-
-    <div class="card">
-      <img src="images/2.jpg" alt="Smart Ideas">
-      <h3>Smart Ideas</h3>
-      <p>Visual explanations that make sense.</p>
-      <a href="editor.html" class="arrow-btn">→</a>
-    </div>
-
-    <div class="card">
-      <img src="images/1.jpg" alt="Collaboration">
-      <h3>Collaboration</h3>
-      <p>Learn and grow together.</p>
-      <a href="editor.html" class="arrow-btn">→</a>
-    </div>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer>
-  <p>© 2026 EduVision. All rights reserved.</p>
-</footer>
 
 <script src="script.js"></script>
 </body>
