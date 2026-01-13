@@ -319,3 +319,32 @@ footer {
   text-decoration: none;
   font-weight: 500;
 }
+/* HAMBURGER */
+.hamburger {
+  display: none;
+  font-size: 28px;
+  cursor: pointer;
+}
+
+/* MOBILE */
+@media (max-width: 900px) {
+  .hamburger {
+    display: block;
+  }
+
+  .nav-links {
+    position: absolute;
+    top: 70px;
+    right: 0;
+    background: #ffd166;
+    width: 100%;
+    flex-direction: column;
+    gap: 20px;
+    padding: 30px;
+    display: none;
+  }
+
+  .nav-links.active {
+    display: flex;
+  }
+}
