@@ -4,183 +4,129 @@
   <meta charset="UTF-8">
   <title>Write Blog</title>
   <meta name="description" content="Write and publish professional blogs on cybersecurity, cloud, and modern technology using VYONIC.">
-<meta name="robots" content="noindex,nofollow">
+  <meta name="robots" content="noindex,nofollow">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
+
   <style>
-    /* =========================
-   GLOBAL RESET
-========================= */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-}
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Inter", system-ui, sans-serif;
+    }
 
-body {
-  background: #f4f7fb;
-  color: #111;
-  min-height: 100vh;
-}
+    body {
+      background: #f4f7fb;
+      color: #111;
+      min-height: 100vh;
+    }
 
-/* =========================
-   NAVBAR
-========================= */
-.navbar {
-  background: #ffc466;
-  padding: 18px 60px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  box-shadow: 0 8px 25px rgba(0,0,0,0.06);
-}
+    /* NAVBAR */
+    .navbar {
+      background: #ffc466;
+      padding: 18px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.06);
+    }
 
-.logo {
-  font-size: 22px;
-  font-weight: 600;
-  color: #3ab7ff;
-}
+    .logo {
+      font-size: 22px;
+      font-weight: 600;
+      color: #3ab7ff;
+    }
 
-.nav-links {
-  list-style: none;
-}
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+    }
 
-.nav-links a {
-  text-decoration: none;
-  color: #111;
-  font-size: 16px;
-  font-weight: 500;
-}
+    .nav-links a {
+      text-decoration: none;
+      color: #111;
+      font-size: 16px;
+      font-weight: 500;
+    }
 
-/* =========================
-   EDITOR WRAPPER
-========================= */
-.editor-wrap {
-  max-width: 900px;
-  margin: 50px auto;
-  background: #ffffff;
-  padding: 40px;
-  border-radius: 22px;
-  box-shadow: 0 30px 60px rgba(0,0,0,0.08);
-}
+    /* EDITOR */
+    .editor-wrap {
+      max-width: 900px;
+      margin: 50px auto;
+      background: #ffffff;
+      padding: 40px;
+      border-radius: 22px;
+      box-shadow: 0 30px 60px rgba(0,0,0,0.08);
+    }
 
-/* =========================
-   TITLE INPUT
-========================= */
-#title {
-  width: 100%;
-  padding: 16px 18px;
-  font-size: 26px;
-  font-weight: 600;
-  border-radius: 14px;
-  border: 1px solid #e5e7eb;
-  outline: none;
-  margin-bottom: 20px;
-}
+    #title {
+      width: 100%;
+      padding: 16px 18px;
+      font-size: 26px;
+      font-weight: 600;
+      border-radius: 14px;
+      border: 1px solid #e5e7eb;
+      margin-bottom: 20px;
+    }
 
-#title::placeholder {
-  color: #9ca3af;
-}
+    .tags-input {
+      width: 100%;
+      padding: 12px 16px;
+      font-size: 15px;
+      border-radius: 12px;
+      border: 1px solid #e5e7eb;
+      margin: 15px 0 25px;
+    }
 
-/* =========================
-   TAG INPUT
-========================= */
-.tags-input {
-  width: 100%;
-  padding: 12px 16px;
-  font-size: 15px;
-  border-radius: 12px;
-  border: 1px solid #e5e7eb;
-  margin: 15px 0 25px;
-}
+    .toolbar {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
 
-.tags-input::placeholder {
-  color: #9ca3af;
-}
+    .toolbar button {
+      padding: 8px 14px;
+      border-radius: 10px;
+      border: 1px solid #e5e7eb;
+      background: #f9fafb;
+      cursor: pointer;
+      font-weight: 600;
+    }
 
-/* =========================
-   TOOLBAR
-========================= */
-.toolbar {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 15px;
-}
+    .editor {
+      width: 100%;
+      min-height: 300px;
+      padding: 18px;
+      border-radius: 16px;
+      border: 1px solid #e5e7eb;
+      font-size: 16px;
+      line-height: 1.7;
+      outline: none;
+    }
 
-.toolbar button {
-  padding: 8px 14px;
-  border-radius: 10px;
-  border: 1px solid #e5e7eb;
-  background: #f9fafb;
-  cursor: pointer;
-  font-weight: 600;
-  transition: 0.2s;
-}
+    .editor:empty::before {
+      content: "Start writing your blog here...";
+      color: #9ca3af;
+    }
 
-.toolbar button:hover {
-  background: #3ab7ff;
-  color: #fff;
-  border-color: #3ab7ff;
-}
+    .publish {
+      margin-top: 30px;
+      padding: 14px 34px;
+      border-radius: 30px;
+      border: none;
+      background: #3ab7ff;
+      color: #ffffff;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+    }
 
-/* =========================
-   CONTENT EDITOR
-========================= */
-.editor {
-  width: 100%;
-  min-height: 300px;
-  padding: 18px;
-  border-radius: 16px;
-  border: 1px solid #e5e7eb;
-  font-size: 16px;
-  line-height: 1.7;
-  outline: none;
-}
-
-.editor:empty::before {
-  content: "Start writing your blog here...";
-  color: #9ca3af;
-}
-
-/* =========================
-   PUBLISH BUTTON
-========================= */
-.publish {
-  margin-top: 30px;
-  padding: 14px 34px;
-  border-radius: 30px;
-  border: none;
-  background: #3ab7ff;
-  color: #ffffff;
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: 0.25s;
-}
-
-.publish:hover {
-  background: #249fe0;
-}
-
-/* =========================
-   RESPONSIVE
-========================= */
-@media (max-width: 768px) {
-  .navbar {
-    padding: 16px 30px;
-  }
-
-  .editor-wrap {
-    padding: 25px;
-    margin: 30px 15px;
-  }
-
-  #title {
-    font-size: 22px;
-  }
-}
-
+    @media (max-width: 768px) {
+      .navbar { padding: 16px 30px; }
+      .editor-wrap { padding: 25px; margin: 30px 15px; }
+      #title { font-size: 22px; }
+    }
   </style>
 </head>
 
@@ -189,15 +135,14 @@ body {
 <nav class="navbar">
   <div class="logo">VYONIC</div>
   <ul class="nav-links">
-    <li><a href="index.html">Home</a></li>
+    <li><a href="dashboard.html">Dashboard</a></li>
+    <li><a href="blogs.html">Blogs</a></li>
   </ul>
 </nav>
 
 <div class="editor-wrap">
-  <!-- TITLE -->
   <input id="title" placeholder="Blog title..." />
 
-  <!-- TOOLBAR -->
   <div class="toolbar">
     <button onclick="cmd('bold')">B</button>
     <button onclick="cmd('italic')">I</button>
@@ -205,21 +150,17 @@ body {
     <button onclick="cmd('formatBlock','h2')">H2</button>
   </div>
 
-  <!-- TAGS -->
-  <input
-    id="tags"
-    class="tags-input"
-    placeholder="Tags (comma separated e.g. Security, Cloud, AI)"
-  />
+  <input id="tags" class="tags-input" placeholder="Tags (comma separated e.g. Security, Cloud, AI)" />
 
-  <!-- CONTENT -->
   <div id="content" class="editor" contenteditable></div>
 
-  <!-- PUBLISH -->
   <button class="publish" onclick="publish()">Publish Blog</button>
 </div>
 
+<!-- PROTECTION -->
+<script src="protect.js"></script>
 
+<!-- BLOG LOGIC -->
 <script src="script.js"></script>
 </body>
 </html>

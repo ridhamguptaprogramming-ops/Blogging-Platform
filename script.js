@@ -95,3 +95,124 @@ function publish() {
   document.getElementById("tags").value = "";
   document.getElementById("content").innerHTML = "";
 }
+function cmd(command, value = null) {
+  document.execCommand(command, false, value);
+}
+
+function publish() {
+  const title = document.getElementById("title").value.trim();
+  const tags = document.getElementById("tags").value.trim();
+  const content = document.getElementById("content").innerHTML.trim();
+
+  if (!title || !content) {
+    alert("Title and content required!");
+    return;
+  }
+
+  const blog = {
+    id: Date.now(),
+    title,
+    tags,
+    content,
+    date: new Date().toLocaleDateString()
+  };
+
+  const blogs = JSON.parse(localStorage.getItem("blogs")) || [];
+  blogs.unshift(blog);
+  localStorage.setItem("blogs", JSON.stringify(blogs));
+
+  alert("Blog published successfully ✅");
+
+  document.getElementById("title").value = "";
+  document.getElementById("tags").value = "";
+  document.getElementById("content").innerHTML = "";
+}
+let editingId = null;
+
+// FORMAT COMMAND
+function cmd(command, value = null) {
+  document.execCommand(command, false, value);
+}
+
+/* IMAGE UPLOAD */
+function uploadImage() {
+  const input = document.createElement("input");
+  input.type = "file";
+  input.accept = "image/*";
+
+  input.onchange = () => {
+    const file = input.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      document.execCommand("insertImage", false, reader.result);
+    };
+    reader.readAsDataURL(file);
+  };
+
+  input.click();
+}
+
+/* SAVE / UPDATE BLOG */
+function publish() {
+  const title = document.getElementById("title").value.trim();
+  const tagsRaw = document.getElementById("tags").value.trim();
+  const content = document.getElementById("content").innerHTML.trim();
+
+  if (!title || !content) {
+    alert("Title and content required");
+    return;
+  }
+
+  const tags = tagsRaw
+    .split(",")
+    .map(t => t.trim())
+    .filter(Boolean);
+
+  let blogs = JSON.parse(localStorage.getItem("blogs")) || [];
+
+  if (editingId) {
+    // UPDATE BLOG
+    blogs = blogs.map(blog =>
+      blog.id === editingId
+        ? { ...blog, title, tags, content }
+        : blog
+    );
+    editingId = null;
+  } else {
+    // NEW BLOG
+    blogs.unshift({
+      id: Date.now(),
+      title,
+      tags,
+      content,
+      date: new Date().toLocaleDateString()
+    });
+  }
+
+  localStorage.setItem("blogs", JSON.stringify(blogs));
+
+  alert("Blog saved ✅");
+  resetEditor();
+}
+
+/* RESET EDITOR */
+function resetEditor() {
+  document.getElementById("title").value = "";
+  document.getElementById("tags").value = "";
+  document.getElementById("content").innerHTML = "";
+}
+
+/* LOAD BLOG FOR EDIT */
+function loadBlogForEdit(id) {
+  const blogs = JSON.parse(localStorage.getItem("blogs")) || [];
+  const blog = blogs.find(b => b.id === id);
+
+  if (!blog) return;
+
+  editingId = id;
+  document.getElementById("title").value = blog.title;
+  document.getElementById("tags").value = blog.tags.join(", ");
+  document.getElementById("content").innerHTML = blog.content;
+}

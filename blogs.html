@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="blogList"></div>
+
+<script>
+  const blogs = JSON.parse(localStorage.getItem("blogs")) || [];
+  const list = document.getElementById("blogList");
+
+  if (!blogs.length) {
+    list.innerHTML = "<p>No blogs yet.</p>";
+  }
+
+  blogs.forEach(blog => {
+    const div = document.createElement("div");
+    div.className = "blog";
+    div.innerHTML = `
+      <h2>${blog.title}</h2>
+      <p>${blog.content.slice(0,120)}...</p>
+      <p><strong>Tags:</strong> ${blog.tags.join(", ")}</p>
+      <button onclick="editBlog(${blog.id})">Edit</button>
+      <button onclick="deleteBlog(${blog.id})">Delete</button>
+    `;
+    list.appendChild(div);
+  });
+
+  function editBlog(id) {
+    localStorage.setItem("editId", id);
+    window.location.href = "editor.html";
+  }
+
+  function deleteBlog(id) {
+    if (!confirm("Delete this blog?")) return;
+    const updated = blogs.filter(b => b.id !== id);
+    localStorage.setItem("blogs", JSON.stringify(updated));
+    location.reload();
+  }
+</script>
+</body>
+</html>
