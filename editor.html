@@ -157,6 +157,17 @@
  <button class="publish" onclick="publish()" href="blogs.html"></a>Publish Blog</button>
 
 </div>
+<select id="templateSelect" onchange="applyTemplate()" style="
+  margin: 15px 0;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+">
+  <option value="">Insert Template…</option>
+  <option value="blog">📝 Blog Post</option>
+  <option value="tutorial">📘 Tutorial</option>
+  <option value="news">📰 News Article</option>
+</select>
 
 <!-- PROTECTION -->
 <script src="protect.js"></script>

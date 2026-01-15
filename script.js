@@ -246,3 +246,60 @@ function publish() {
   alert("Blog saved ✅");
   window.location.href = "blogs.html";
 }
+function applyTemplate() {
+  const type = document.getElementById("templateSelect").value;
+  const editor = document.getElementById("content");
+
+  if (!type) return;
+
+  let template = "";
+
+  if (type === "blog") {
+    template = `
+      <h2>Introduction</h2>
+      <p>Write a short introduction here...</p>
+
+      <h2>Main Content</h2>
+      <p>Explain your main idea in detail...</p>
+
+      <h2>Conclusion</h2>
+      <p>Summarize your thoughts and add a call to action.</p>
+    `;
+  }
+
+  if (type === "tutorial") {
+    template = `
+      <h2>What You Will Learn</h2>
+      <ul>
+        <li>Concept 1</li>
+        <li>Concept 2</li>
+        <li>Concept 3</li>
+      </ul>
+
+      <h2>Step 1</h2>
+      <p>Explain the first step...</p>
+
+      <h2>Step 2</h2>
+      <p>Explain the second step...</p>
+
+      <h2>Final Result</h2>
+      <p>Show the outcome and tips.</p>
+    `;
+  }
+
+  if (type === "news") {
+    template = `
+      <h2>Headline Summary</h2>
+      <p>Brief overview of the news.</p>
+
+      <h2>What Happened?</h2>
+      <p>Explain the event in detail.</p>
+
+      <h2>Why It Matters</h2>
+      <p>Explain the impact and importance.</p>
+    `;
+  }
+
+  editor.innerHTML = template;
+  document.getElementById("templateSelect").value = "";
+}
