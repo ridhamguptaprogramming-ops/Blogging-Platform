@@ -1,140 +1,59 @@
+/* =========================
+   SMOOTH SCROLL
+========================= */
 document.querySelectorAll('a[href^="#"]').forEach(link => {
   link.addEventListener("click", e => {
     e.preventDefault();
-    document.querySelector(link.getAttribute("href"))
-      .scrollIntoView({ behavior: "smooth" });
+    const target = document.querySelector(link.getAttribute("href"));
+    if (target) target.scrollIntoView({ behavior: "smooth" });
   });
 });
-[
-  { id: 1, title: "Post title", content: "Post content" },
-  { id: 2, title: "Another post", content: "Text..." }
-]
-document.getElementById("getStartedBtn").addEventListener("click", () => {
-  alert("Welcome! Let's get started 🚀");
-});
 
-// HAMBURGER MENU
+/* =========================
+   HAMBURGER MENU
+========================= */
 const hamburger = document.getElementById("hamburger");
 const navLinks = document.getElementById("navLinks");
 
-hamburger.addEventListener("click", () => {
-  navLinks.classList.toggle("active");
-});
-
-// GET STARTED SCROLL
-document.getElementById("getStartedBtn").addEventListener("click", () => {
-  document.getElementById("vision").scrollIntoView({
-    behavior: "smooth"
+if (hamburger && navLinks) {
+  hamburger.addEventListener("click", () => {
+    navLinks.classList.toggle("active");
   });
-  navLinks.classList.remove("active");
-});
+}
+
+/* =========================
+   AUTH STATE
+========================= */
 const authArea = document.getElementById("authArea");
 const user = JSON.parse(localStorage.getItem("user"));
 const loggedIn = localStorage.getItem("loggedIn");
 
-if (loggedIn && user) {
-  authArea.innerHTML = `
-    <span style="margin-right:10px;">Hi, ${user.name}</span>
-    <button onclick="logout()" style="
-      background:#ef4444;
-      border:none;
-      padding:8px 12px;
-      color:white;
-      border-radius:6px;
-      cursor:pointer;
-    ">Logout</button>
-  `;
-} else {
-  authArea.innerHTML = `
-    <a href="signup.html" style="
-      background:#3bb6ff;
-      padding:8px 14px;
-      border-radius:6px;
-      color:white;
-      text-decoration:none;
-    ">Get Started</a>
-  `;
-}
-// TEXT FORMAT COMMANDS
-function cmd(command, value = null) {
-  document.execCommand(command, false, value);
+if (authArea) {
+  authArea.innerHTML = loggedIn && user
+    ? `<span>Hi, ${user.name}</span>
+       <button onclick="logout()">Logout</button>`
+    : `<a href="signup.html">Get Started</a>`;
 }
 
-// PUBLISH BLOG
-function publish() {
-  const title = document.getElementById("title").value.trim();
-  const tags = document.getElementById("tags").value.trim();
-  const content = document.getElementById("content").innerHTML.trim();
-
-  if (!title || !content) {
-    alert("Title aur content required hai!");
-    return;
-  }
-
-  const blog = {
-    id: Date.now(),
-    title,
-    tags,
-    content,
-    date: new Date().toLocaleDateString()
-  };
-
-  // OLD BLOGS LOAD KARO
-  let blogs = JSON.parse(localStorage.getItem("blogs")) || [];
-
-  // NEW BLOG ADD KARO
-  blogs.unshift(blog);
-
-  // SAVE TO LOCALSTORAGE
-  localStorage.setItem("blogs", JSON.stringify(blogs));
-
-  alert("Blog published successfully ✅");
-
-  // CLEAR EDITOR
-  document.getElementById("title").value = "";
-  document.getElementById("tags").value = "";
-  document.getElementById("content").innerHTML = "";
-}
-function cmd(command, value = null) {
-  document.execCommand(command, false, value);
+function logout() {
+  localStorage.removeItem("loggedIn");
+  window.location.href = "login.html";
 }
 
-function publish() {
-  const title = document.getElementById("title").value.trim();
-  const tags = document.getElementById("tags").value.trim();
-  const content = document.getElementById("content").innerHTML.trim();
-
-  if (!title || !content) {
-    alert("Title and content required!");
-    return;
-  }
-
-  const blog = {
-    id: Date.now(),
-    title,
-    tags,
-    content,
-    date: new Date().toLocaleDateString()
-  };
-
-  const blogs = JSON.parse(localStorage.getItem("blogs")) || [];
-  blogs.unshift(blog);
-  localStorage.setItem("blogs", JSON.stringify(blogs));
-
-  alert("Blog published successfully ✅");
-
-  document.getElementById("title").value = "";
-  document.getElementById("tags").value = "";
-  document.getElementById("content").innerHTML = "";
-}
+/* =========================
+   EDITOR CORE
+========================= */
 let editingId = null;
+let coverImage = null;
 
-// FORMAT COMMAND
+/* FORMAT COMMAND */
 function cmd(command, value = null) {
   document.execCommand(command, false, value);
 }
 
-/* IMAGE UPLOAD */
+/* =========================
+   IMAGE UPLOAD (INLINE)
+========================= */
 function uploadImage() {
   const input = document.createElement("input");
   input.type = "file";
@@ -154,7 +73,118 @@ function uploadImage() {
   input.click();
 }
 
-/* SAVE / UPDATE BLOG */
+/* =========================
+   COVER IMAGE UPLOAD
+========================= */
+function uploadCover(input) {
+  const file = input.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = () => {
+    coverImage = reader.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+/* =========================
+   TEMPLATE SYSTEM
+========================= */
+function applyTemplate() {
+  const select = document.getElementById("templateSelect");
+  const editor = document.getElementById("content");
+  if (!select || !editor) return;
+
+  const templates = {
+    seo: `
+<h1>Main SEO Title (Primary Keyword)</h1>
+<p><strong>Meta Description:</strong> 150–160 characters.</p>
+<h2>Introduction</h2>
+<p>Use keyword in first 100 words.</p>
+<h2>FAQs</h2>
+<p><strong>Q:</strong> Question?</p>
+<p><strong>A:</strong> Answer.</p>
+<h2>Conclusion</h2>
+<p>CTA + trust.</p>`,
+
+    blog: `
+<h2>Introduction</h2>
+<p>Intro...</p>
+<h2>Main Content</h2>
+<p>Details...</p>
+<h2>Conclusion</h2>
+<p>CTA.</p>`,
+
+    tutorial: `
+<h2>What You Will Learn</h2>
+<ul><li>Step 1</li><li>Step 2</li></ul>
+<h2>Final Result</h2>
+<p>Outcome</p>`,
+
+    news: `
+<h2>Headline Summary</h2>
+<p>Overview</p>
+<h2>Why It Matters</h2>
+<p>Impact</p>`,
+
+    case: `
+<h1>Case Study: Project Name</h1>
+<h2>Problem</h2><p>Describe issue</p>
+<h2>Solution</h2><p>Explain approach</p>
+<h2>Results</h2><p>Metrics</p>`,
+
+    review: `
+<h1>Product Review</h1>
+<p><strong>Rating:</strong> ⭐⭐⭐⭐☆</p>
+<h2>Pros</h2><ul><li>Good</li></ul>
+<h2>Cons</h2><ul><li>Bad</li></ul>
+<h2>Verdict</h2><p>Who should buy</p>`,
+
+    markdown: `
+# Blog Title
+
+## Introduction
+Text here
+
+## Code
+\`\`\`js
+console.log("Hello");
+\`\`\`
+`
+  };
+
+  if (select.value === "markdown") {
+    editor.innerText = templates.markdown;
+  } else {
+    editor.innerHTML = templates[select.value] || "";
+  }
+
+  select.value = "";
+}
+
+/* =========================
+   SEO CHECK (ONLY FOR SEO TEMPLATE)
+========================= */
+function seoCheck() {
+  const title = document.getElementById("title").value;
+  const text = document.getElementById("content").innerText;
+
+  if (title.length < 40) {
+    alert("SEO: Title must be at least 40 characters");
+    return false;
+  }
+
+  if (text.split(" ").length < 300) {
+    alert("SEO: Content must be 300+ words");
+    return false;
+  }
+
+  return true;
+}
+
+/* =========================
+   SAVE / UPDATE BLOG
+========================= */
 function publish() {
   const title = document.getElementById("title").value.trim();
   const tagsRaw = document.getElementById("tags").value.trim();
@@ -165,141 +195,183 @@ function publish() {
     return;
   }
 
-  const tags = tagsRaw
-    .split(",")
-    .map(t => t.trim())
-    .filter(Boolean);
-
+  const tags = tagsRaw.split(",").map(t => t.trim()).filter(Boolean);
   let blogs = JSON.parse(localStorage.getItem("blogs")) || [];
 
   if (editingId) {
-    // UPDATE BLOG
-    blogs = blogs.map(blog =>
-      blog.id === editingId
-        ? { ...blog, title, tags, content }
-        : blog
+    blogs = blogs.map(b =>
+      b.id === editingId
+        ? { ...b, title, tags, content, cover: coverImage }
+        : b
     );
     editingId = null;
   } else {
-    // NEW BLOG
     blogs.unshift({
       id: Date.now(),
       title,
       tags,
       content,
+      cover: coverImage,
       date: new Date().toLocaleDateString()
     });
   }
 
   localStorage.setItem("blogs", JSON.stringify(blogs));
-
-  alert("Blog saved ✅");
-  resetEditor();
+  window.location.href = "blogs.html";
 }
 
-/* RESET EDITOR */
-function resetEditor() {
-  document.getElementById("title").value = "";
-  document.getElementById("tags").value = "";
-  document.getElementById("content").innerHTML = "";
-}
+/* =========================
+   LOAD BLOG FOR EDIT
+========================= */
+(function loadEditMode() {
+  const editId = localStorage.getItem("editId");
+  if (!editId) return;
 
-/* LOAD BLOG FOR EDIT */
-function loadBlogForEdit(id) {
   const blogs = JSON.parse(localStorage.getItem("blogs")) || [];
-  const blog = blogs.find(b => b.id === id);
-
+  const blog = blogs.find(b => b.id == editId);
   if (!blog) return;
 
-  editingId = id;
+  editingId = blog.id;
   document.getElementById("title").value = blog.title;
   document.getElementById("tags").value = blog.tags.join(", ");
   document.getElementById("content").innerHTML = blog.content;
-}
-function publish() {
-  const title = document.getElementById("title").value.trim();
-  const tagsRaw = document.getElementById("tags").value.trim();
-  const content = document.getElementById("content").innerHTML.trim();
+  coverImage = blog.cover || null;
 
-  if (!title || !content) {
-    alert("Title and content required");
-    return;
-  }
+  localStorage.removeItem("editId");
+})();
+if (!localStorage.getItem("loggedIn")) {
+  alert("Please login to access this page");
+  window.location.href = "login.html";
+} 
+/* =========================
+   COVER IMAGE PREVIEW
+========================= */
 
-  const tags = tagsRaw
-    .split(",")
-    .map(t => t.trim())
-    .filter(Boolean);
+const coverInput = document.getElementById("coverInput");
+const coverPreview = document.getElementById("coverPreview");
 
-  let blogs = JSON.parse(localStorage.getItem("blogs")) || [];
+if (coverInput) {
+  coverInput.addEventListener("change", () => {
+    const file = coverInput.files[0];
+    if (!file) return;
 
-  blogs.unshift({
-    id: Date.now(),
-    title,
-    tags,
-    content,
-    date: new Date().toLocaleDateString()
+    const reader = new FileReader();
+    reader.onload = () => {
+      coverImage = reader.result;
+      coverPreview.src = coverImage;
+      coverPreview.style.display = "block";
+    };
+    reader.readAsDataURL(file);
   });
-
-  localStorage.setItem("blogs", JSON.stringify(blogs));
-
-  alert("Blog saved ✅");
-  window.location.href = "blogs.html";
 }
-function applyTemplate() {
-  const type = document.getElementById("templateSelect").value;
-  const editor = document.getElementById("content");
+blogs.unshift({
+  id: Date.now(),
+  title,
+  tags,
+  content,
+  cover: coverImage, // ✅ NEW
+  date: new Date().toLocaleDateString()
+});
+{
+localStorage.setItem("blogs", JSON.stringify(blogs));
+window.location.href = "blogs.html";
+}
+/* =========================
+   LOAD BLOG FOR EDIT
+========================= */
+(function loadEditMode() {
+  const editId = localStorage.getItem("editId");
+  if (!editId) return;
 
-  if (!type) return;
+  const blogs = JSON.parse(localStorage.getItem("blogs")) || [];
+  const blog = blogs.find(b => b.id == editId);
+  if (!blog) return;
 
-  let template = "";
+  editingId = blog.id;
+  document.getElementById("title").value = blog.title;
+  document.getElementById("tags").value = blog.tags.join(", ");
+  document.getElementById("content").innerHTML = blog.content;
+  coverImage = blog.cover || null;
 
-  if (type === "blog") {
-    template = `
-      <h2>Introduction</h2>
-      <p>Write a short introduction here...</p>
+  localStorage.removeItem("editId");
+})();
+/* =========================
+   LOAD BLOG BY ID
+========================= */
+const params = new URLSearchParams(window.location.search);
+const blogId = Number(params.get("id"));
 
-      <h2>Main Content</h2>
-      <p>Explain your main idea in detail...</p>
+const blogs = JSON.parse(localStorage.getItem("blogs")) || [];
+const blog = blogs.find(b => b.id === blogId);
 
-      <h2>Conclusion</h2>
-      <p>Summarize your thoughts and add a call to action.</p>
-    `;
+const blogContainer = document.getElementById("blog");
+
+if (!blog) {
+  blogContainer.innerHTML = "<p>Blog not found.</p>";
+} else {
+  blogContainer.innerHTML = `
+    ${blog.cover ? `<img src="${blog.cover}" alt="${blog.title}">` : ""}
+    <h1>${blog.title}</h1>
+    <div class="date">${blog.date}</div>
+    <div class="content">${blog.content}</div>
+  `;
+
+  setSEO(blog);
+}
+
+/* =========================
+   SEO + SOCIAL META
+========================= */
+function setSEO(blog) {
+  document.title = blog.title + " | VYONIC";
+
+  document
+    .querySelector("#seo-description")
+    .setAttribute(
+      "content",
+      blog.content.replace(/<[^>]+>/g, "").slice(0, 155)
+    );
+
+  document.querySelector("#og-title").content = blog.title;
+  document.querySelector("#og-description").content =
+    blog.content.replace(/<[^>]+>/g, "").slice(0, 160);
+  document.querySelector("#og-url").content = window.location.href;
+
+  if (blog.cover) {
+    document.querySelector("#og-image").content = blog.cover;
   }
 
-  if (type === "tutorial") {
-    template = `
-      <h2>What You Will Learn</h2>
-      <ul>
-        <li>Concept 1</li>
-        <li>Concept 2</li>
-        <li>Concept 3</li>
-      </ul>
+  document.querySelector("#twitter-title").content = blog.title;
+  document.querySelector("#twitter-description").content =
+    blog.content.replace(/<[^>]+>/g, "").slice(0, 160);
+}
 
-      <h2>Step 1</h2>
-      <p>Explain the first step...</p>
+/* =========================
+   DARK MODE
+========================= */
+function toggleTheme() {
+  document.body.classList.toggle("dark");
+  localStorage.setItem(
+    "theme",
+    document.body.classList.contains("dark") ? "dark" : "light"
+  );
+}
 
-      <h2>Step 2</h2>
-      <p>Explain the second step...</p>
+// load theme
+if (localStorage.getItem("theme") === "dark") {
+  document.body.classList.add("dark");
+}
 
-      <h2>Final Result</h2>
-      <p>Show the outcome and tips.</p>
-    `;
-  }
+/* =========================
+   MOBILE MENU
+========================= */
+function toggleMenu() {
+  document.querySelector(".nav-links").classList.toggle("active");
+}
 
-  if (type === "news") {
-    template = `
-      <h2>Headline Summary</h2>
-      <p>Brief overview of the news.</p>
-
-      <h2>What Happened?</h2>
-      <p>Explain the event in detail.</p>
-
-      <h2>Why It Matters</h2>
-      <p>Explain the impact and importance.</p>
-    `;
-  }
-
-  editor.innerHTML = template;
-  document.getElementById("templateSelect").value = "";
+/* =========================
+   EXPORT PDF
+========================= */
+function exportPDF() {
+  window.print();
 }
