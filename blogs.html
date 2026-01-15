@@ -1,45 +1,167 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <title>Blogs</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: Inter, system-ui, sans-serif;
+    }
+
+    body {
+      background: #f4f7fb;
+      padding: 40px;
+      color: #111;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+    }
+
+    .top-bar {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+
+    .top-bar input {
+      padding: 10px 14px;
+      border-radius: 10px;
+      border: 1px solid #ddd;
+      width: 250px;
+    }
+
+    .blog {
+      background: #fff;
+      padding: 30px;
+      border-radius: 18px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+      margin-bottom: 25px;
+    }
+
+    .blog h2 {
+      margin-bottom: 10px;
+    }
+
+    .blog .date {
+      font-size: 13px;
+      color: #777;
+      margin-bottom: 10px;
+    }
+
+    .blog p {
+      color: #444;
+      line-height: 1.6;
+    }
+
+    .tags {
+      margin-top: 10px;
+      font-size: 14px;
+      color: #3ab7ff;
+    }
+
+    .actions {
+      margin-top: 18px;
+      display: flex;
+      gap: 10px;
+    }
+
+    button {
+      padding: 8px 16px;
+      border-radius: 20px;
+      border: none;
+      cursor: pointer;
+      font-weight: 500;
+    }
+
+    .edit {
+      background: #3ab7ff;
+      color: #fff;
+    }
+
+    .delete {
+      background: #ef4444;
+      color: #fff;
+    }
+  </style>
 </head>
 <body>
-    <div id="blogList"></div>
+
+<h1>All Blogs</h1>
+
+<div class="top-bar">
+  <input id="tagFilter" placeholder="Filter by tag (SEO, AI, Cloud)">
+</div>
+
+<div id="blogList"></div>
+
+<!-- PROTECT PAGE -->
+<script src="protect.js"></script>
 
 <script>
-  const blogs = JSON.parse(localStorage.getItem("blogs")) || [];
-  const list = document.getElementById("blogList");
+  let blogs = JSON.parse(localStorage.getItem("blogs")) || [];
+  const blogList = document.getElementById("blogList");
 
-  if (!blogs.length) {
-    list.innerHTML = "<p>No blogs yet.</p>";
+  function renderBlogs(data) {
+    blogList.innerHTML = "";
+
+    if (!data.length) {
+      blogList.innerHTML = "<p>No blogs found.</p>";
+      return;
+    }
+
+    data.forEach(blog => {
+      const div = document.createElement("div");
+      div.className = "blog";
+
+      div.innerHTML = `
+        <h2>${blog.title}</h2>
+        <div class="date">${blog.date}</div>
+        <p>${blog.content.slice(0,150)}...</p>
+        <div class="tags"># ${blog.tags.join(" , ")}</div>
+
+        <div class="actions">
+          <button class="edit" onclick="editBlog(${blog.id})">Edit</button>
+          <button class="delete" onclick="deleteBlog(${blog.id})">Delete</button>
+        </div>
+      `;
+
+      blogList.appendChild(div);
+    });
   }
 
-  blogs.forEach(blog => {
-    const div = document.createElement("div");
-    div.className = "blog";
-    div.innerHTML = `
-      <h2>${blog.title}</h2>
-      <p>${blog.content.slice(0,120)}...</p>
-      <p><strong>Tags:</strong> ${blog.tags.join(", ")}</p>
-      <button onclick="editBlog(${blog.id})">Edit</button>
-      <button onclick="deleteBlog(${blog.id})">Delete</button>
-    `;
-    list.appendChild(div);
-  });
+  renderBlogs(blogs);
 
+  /* EDIT */
   function editBlog(id) {
     localStorage.setItem("editId", id);
     window.location.href = "editor.html";
   }
 
+  /* DELETE */
   function deleteBlog(id) {
     if (!confirm("Delete this blog?")) return;
-    const updated = blogs.filter(b => b.id !== id);
-    localStorage.setItem("blogs", JSON.stringify(updated));
-    location.reload();
+
+    blogs = blogs.filter(b => b.id !== id);
+    localStorage.setItem("blogs", JSON.stringify(blogs));
+    renderBlogs(blogs);
   }
+
+  /* TAG FILTER */
+  document.getElementById("tagFilter").addEventListener("input", e => {
+    const value = e.target.value.toLowerCase();
+
+    const filtered = blogs.filter(blog =>
+      blog.tags.some(tag => tag.toLowerCase().includes(value))
+    );
+
+    renderBlogs(filtered);
+  });
+  
 </script>
+
 </body>
 </html>

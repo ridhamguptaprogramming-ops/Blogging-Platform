@@ -216,3 +216,33 @@ function loadBlogForEdit(id) {
   document.getElementById("tags").value = blog.tags.join(", ");
   document.getElementById("content").innerHTML = blog.content;
 }
+function publish() {
+  const title = document.getElementById("title").value.trim();
+  const tagsRaw = document.getElementById("tags").value.trim();
+  const content = document.getElementById("content").innerHTML.trim();
+
+  if (!title || !content) {
+    alert("Title and content required");
+    return;
+  }
+
+  const tags = tagsRaw
+    .split(",")
+    .map(t => t.trim())
+    .filter(Boolean);
+
+  let blogs = JSON.parse(localStorage.getItem("blogs")) || [];
+
+  blogs.unshift({
+    id: Date.now(),
+    title,
+    tags,
+    content,
+    date: new Date().toLocaleDateString()
+  });
+
+  localStorage.setItem("blogs", JSON.stringify(blogs));
+
+  alert("Blog saved ✅");
+  window.location.href = "blogs.html";
+}
