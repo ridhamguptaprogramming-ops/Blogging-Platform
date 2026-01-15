@@ -276,7 +276,109 @@ blogs.unshift({
 localStorage.setItem("blogs", JSON.stringify(blogs));
 window.location.href = "blogs.html";
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 =======
+=======
+}
+/* =========================
+   LOAD BLOG FOR EDIT
+========================= */
+(function loadEditMode() {
+  const editId = localStorage.getItem("editId");
+  if (!editId) return;
+
+  const blogs = JSON.parse(localStorage.getItem("blogs")) || [];
+  const blog = blogs.find(b => b.id == editId);
+  if (!blog) return;
+
+  editingId = blog.id;
+  document.getElementById("title").value = blog.title;
+  document.getElementById("tags").value = blog.tags.join(", ");
+  document.getElementById("content").innerHTML = blog.content;
+  coverImage = blog.cover || null;
+
+  localStorage.removeItem("editId");
+})();
+/* =========================
+   LOAD BLOG BY ID
+========================= */
+const params = new URLSearchParams(window.location.search);
+const blogId = Number(params.get("id"));
+
+const blogs = JSON.parse(localStorage.getItem("blogs")) || [];
+const blog = blogs.find(b => b.id === blogId);
+
+const blogContainer = document.getElementById("blog");
+
+if (!blog) {
+  blogContainer.innerHTML = "<p>Blog not found.</p>";
+} else {
+  blogContainer.innerHTML = `
+    ${blog.cover ? `<img src="${blog.cover}" alt="${blog.title}">` : ""}
+    <h1>${blog.title}</h1>
+    <div class="date">${blog.date}</div>
+    <div class="content">${blog.content}</div>
+  `;
+
+  setSEO(blog);
+}
+
+/* =========================
+   SEO + SOCIAL META
+========================= */
+function setSEO(blog) {
+  document.title = blog.title + " | VYONIC";
+
+  document
+    .querySelector("#seo-description")
+    .setAttribute(
+      "content",
+      blog.content.replace(/<[^>]+>/g, "").slice(0, 155)
+    );
+
+  document.querySelector("#og-title").content = blog.title;
+  document.querySelector("#og-description").content =
+    blog.content.replace(/<[^>]+>/g, "").slice(0, 160);
+  document.querySelector("#og-url").content = window.location.href;
+
+  if (blog.cover) {
+    document.querySelector("#og-image").content = blog.cover;
+  }
+
+  document.querySelector("#twitter-title").content = blog.title;
+  document.querySelector("#twitter-description").content =
+    blog.content.replace(/<[^>]+>/g, "").slice(0, 160);
+}
+
+/* =========================
+   DARK MODE
+========================= */
+function toggleTheme() {
+  document.body.classList.toggle("dark");
+  localStorage.setItem(
+    "theme",
+    document.body.classList.contains("dark") ? "dark" : "light"
+  );
+}
+
+// load theme
+if (localStorage.getItem("theme") === "dark") {
+  document.body.classList.add("dark");
+}
+
+/* =========================
+   MOBILE MENU
+========================= */
+function toggleMenu() {
+  document.querySelector(".nav-links").classList.toggle("active");
+}
+
+/* =========================
+   EXPORT PDF
+========================= */
+function exportPDF() {
+  window.print();
+>>>>>>> Stashed changes
 }
 /* =========================
    LOAD BLOG FOR EDIT
