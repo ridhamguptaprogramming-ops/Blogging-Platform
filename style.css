@@ -261,13 +261,118 @@ body {
 /* =====================
    FOOTER
 ===================== */
-footer {
-  background: #111;
-  color: #aaa;
-  text-align: center;
-  padding: 20px;
+.site-footer {
+  background: #3e3e3e;
+  color: #eaeaea;
+  font-family: Inter, system-ui, sans-serif;
+}
+
+/* TOP AREA */
+.footer-top {
+  max-width: 1300px;
+  margin: auto;
+  padding: 80px 60px;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 60px;
+}
+
+.footer-col h2 {
+  font-size: 28px;
+  line-height: 1.2;
+  margin-bottom: 20px;
+}
+
+.footer-col h4 {
+  font-size: 13px;
+  letter-spacing: 2px;
+  margin-bottom: 18px;
+  color: #fff;
+}
+
+.footer-col a {
+  display: block;
+  text-decoration: none;
+  color: #d6d6d6;
+  margin-bottom: 12px;
   font-size: 14px;
 }
+
+.footer-col a:hover {
+  color: #fff;
+}
+
+/* SOCIAL */
+.socials {
+  display: flex;
+  gap: 12px;
+  margin-top: 18px;
+  font-size: 18px;
+}
+
+/* BOTTOM */
+.footer-bottom {
+  background: #1e1e1e;
+  padding: 30px 60px;
+  text-align: center;
+  position: relative;
+}
+
+.footer-bottom p {
+  font-size: 13px;
+  color: #b5b5b5;
+}
+
+.footer-bottom .cookie {
+  font-style: italic;
+  margin-top: 6px;
+}
+
+/* JOIN BUTTON */
+.vault-btn {
+  position: absolute;
+  right: 80px;
+  bottom: 25px;
+  padding: 12px 26px;
+  border-radius: 30px;
+  border: none;
+  background: #e7c8b9;
+  color: #222;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+/* SCROLL TOP */
+.scroll-top {
+  position: absolute;
+  right: 30px;
+  bottom: 25px;
+  width: 42px;
+  height: 42px;
+  background: #e7c8b9;
+  color: #222;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+/* RESPONSIVE */
+@media(max-width: 900px) {
+  .footer-top {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .vault-btn,
+  .scroll-top {
+    position: static;
+    margin: 20px auto 0;
+    display: block;
+  }
+}
+
 
 /* =====================
    RESPONSIVE
