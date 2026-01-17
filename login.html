@@ -1,26 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Login</title>
-  <link rel="stylesheet" href="auth.css">
+<meta charset="UTF-8">
+<title>Login</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{
+  background:#f6f4f1;
+  font-family:Inter,system-ui,sans-serif;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  height:100vh;
+}
+
+.box{
+  background:#fff;
+  padding:40px;
+  border-radius:20px;
+  width:360px;
+  box-shadow:0 30px 60px rgba(0,0,0,.1);
+}
+
+h2{
+  margin-bottom:20px;
+}
+
+input{
+  width:100%;
+  padding:14px;
+  border-radius:12px;
+  border:1px solid #ddd;
+  margin-bottom:15px;
+}
+
+button{
+  width:100%;
+  padding:14px;
+  border:none;
+  border-radius:30px;
+  background:#3ab7ff;
+  color:#fff;
+  font-size:16px;
+  cursor:pointer;
+}
+
+#error{
+  margin-top:10px;
+  font-size:14px;
+  color:red;
+}
+</style>
 </head>
+
 <body>
 
-<div class="auth-box">
+<div class="box">
   <h2>Login</h2>
 
-  <input type="email" id="loginEmail" placeholder="Email">
-  <input type="password" id="loginPassword" placeholder="Password">
+  <input id="email" placeholder="Email">
+  <input id="password" type="password" placeholder="Password">
 
   <button onclick="login()">Login</button>
 
-  <p>Don’t have an account?
-    <a href="signup.html">Sign Up</a>
-  </p>
+  <p id="error"></p>
 </div>
 
+<script>
+function login(){
+  const email=document.getElementById("email").value.trim();
+  const password=document.getElementById("password").value.trim();
 
+  // demo credentials
+  if(email==="admin@gmail.com" && password==="admin123"){
+    localStorage.setItem("loggedIn","true");
+    localStorage.setItem("user","Admin");
+    window.location.href="dashboard.html";
+  }else{
+    document.getElementById("error").innerText="Invalid login";
+  }
+}
+</script>
 <script src="auth.js"></script>
 </body>
 </html>

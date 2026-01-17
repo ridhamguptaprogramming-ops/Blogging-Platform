@@ -245,3 +245,27 @@ if (localStorage.getItem("theme") === "dark") {
 function exportPDF() {
   window.print();
 }
+
+
+function uploadCover(input) {
+  const file = input.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = () => {
+    coverImage = reader.result;
+    const preview = document.getElementById("coverPreview");
+    if (preview) {
+      preview.src = coverImage;
+      preview.style.display = "block";
+    }
+  };
+  reader.readAsDataURL(file);
+}
+
+function logout(){
+  localStorage.removeItem("loggedIn");
+  localStorage.removeItem("user");
+  window.location.href="login.html";
+}
+

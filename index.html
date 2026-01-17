@@ -2,9 +2,11 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Education Website</title>
+  <title>EduVision – Learn Smarter</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+
+  <!-- ICONS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 
   <!-- CSS -->
   <link rel="stylesheet" href="style.css">
@@ -12,22 +14,22 @@
   <!-- FONT -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
+
 <body>
+
 <!-- NAVBAR -->
 <nav class="navbar">
-  <div class="logo">EduVision</div>
-  <ul>
+  <div class="logo">Blogging Platform</div>
+
+  <ul class="nav-links" id="navLinks">
     <li><a href="blogs.html">Blogs</a></li>
-    <button onclick="uploadImage()">🖼</button>
     <li><a href="#home">Home</a></li>
     <li><a href="#vision">Vision</a></li>
     <li><a href="#features">Features</a></li>
-    
-  <div class="hamburger" id="hamburger">☰</div>
-
-    <!-- AUTH AREA -->
-  <li id="authArea"></li>
+    <button onclick="login()">Login</button>
+    <li id="authArea"></li>
   </ul>
+  
 </nav>
 
 <!-- HERO -->
@@ -37,7 +39,6 @@
   <div class="hero-content">
     <h1>Learn Smarter<br><span>Together</span></h1>
     <p>Interactive learning for students and teachers.</p>
-    
     <a href="#vision" class="hero-btn">Explore Now →</a>
   </div>
 </header>
@@ -51,7 +52,6 @@
       Our platform helps learners grow with clarity and creativity.
     </p>
 
-    <!-- FIXED BUTTON -->
     <a href="editor.html" class="arrow-btn">→</a>
   </div>
 
@@ -61,7 +61,7 @@
 </section>
 
 <!-- FEATURES -->
-<section class="features" id="vision">
+<section class="features" id="features">
   <h2>What We Offer</h2>
 
   <div class="cards">
@@ -71,7 +71,7 @@
       <h3>Let’s talk about love languages</h3>
       <p>
         Not all marketing works the same way for all prospects, just as the same
-        love language isn’t for everyone. What’s common in both are presence and trust.
+        love language isn’t for everyone.
       </p>
       <a href="short.html" class="card-btn">Read →</a>
     </div>
@@ -80,8 +80,7 @@
       <img src="images/2.jpg" alt="Money on the Table">
       <h3>There’s money on the table you’re not collecting</h3>
       <p>
-        You may already have everything you need to start making money with your content,
-        but you’re not seeing it yet. Let me show you how.
+        You may already have everything you need to start making money with your content.
       </p>
       <a href="editor.html" class="card-btn">Read →</a>
     </div>
@@ -90,8 +89,7 @@
       <img src="3.jpg" alt="SEO Learning">
       <h3>Can’t you learn SEO from YouTube and ChatGPT?</h3>
       <p>
-        What’s the real reason I’m asking you to pay for my Blog SEO course,
-        when you can learn it on YouTube or with AI help?
+        Why pay for structured SEO learning when free content exists?
       </p>
       <a href="editor.html" class="card-btn">Read →</a>
     </div>
@@ -99,15 +97,13 @@
   </div>
 </section>
 
-
 <!-- FOOTER -->
-  <footer class="site-footer">
+<footer class="site-footer">
 
   <div class="footer-top">
 
-    <!-- BRAND -->
     <div class="footer-col brand">
-      <h2>THE<br>SIDE<br>BLOGGER</h2>
+      <h2>Blogging<br>Platform</h2>
       <a href="about.html">About</a>
       <a href="Contact.html">Contact</a>
 
@@ -119,7 +115,6 @@
       </div>
     </div>
 
-    <!-- RESOURCES -->
     <div class="footer-col">
       <h4>RESOURCES</h4>
       <a href="blogs.html">→ Newsletter</a>
@@ -128,14 +123,12 @@
       <a href="#">→ Membership</a>
     </div>
 
-    <!-- SPONSOR -->
     <div class="footer-col">
       <h4>SPONSOR / ADS</h4>
       <a href="#">→ Brand Partnership</a>
       <a href="#">→ Newsletter Ads</a>
     </div>
 
-    <!-- DISCLOSURES -->
     <div class="footer-col">
       <h4>DISCLOSURES</h4>
       <a href="#">→ Privacy Policy</a>
@@ -145,11 +138,10 @@
 
   </div>
 
-  <!-- FOOTER BOTTOM -->
   <div class="footer-bottom">
     <p>© 2018 – 2026 The Side Blogger. All Rights Reserved.</p>
     <p class="cookie">
-      This site uses affiliate links and cookies. By continuing to use this site, you consent to all cookies.
+      This site uses affiliate links and cookies.
     </p>
 
     <button class="vault-btn">Join the Vault</button>
@@ -160,5 +152,6 @@
 
 <script src="auth.js"></script>
 <script src="script.js"></script>
+
 </body>
 </html>
