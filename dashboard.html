@@ -260,7 +260,7 @@ const blogs = JSON.parse(localStorage.getItem("blogs")) || [];
 const blogList = document.getElementById("blogList");
 
 document.getElementById("totalBlogs").innerText = blogs.length;
-document.getElementById("readers").innerText = blogs.length * 120;
+document.getElementById("readers").innerText = blogs.length * Math.floor(Math.random() * 0+1 ); // Simulated readers
 
 /* RENDER BLOGS */
 function stripHTML(html){

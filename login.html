@@ -69,19 +69,27 @@ button{
 
 <script>
 function login(){
-  const email=document.getElementById("email").value.trim();
-  const password=document.getElementById("password").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value.trim();
 
   // demo credentials
-  if(email==="admin@gmail.com" && password==="admin123"){
-    localStorage.setItem("loggedIn","true");
-    localStorage.setItem("user","Admin");
-    window.location.href="dashboard.html";
-  }else{
-    document.getElementById("error").innerText="Invalid login";
+  if(email === "admin@gmail.com" && password === "admin123"){
+    localStorage.setItem("loggedIn", "true");
+    localStorage.setItem(
+      "user",
+      JSON.stringify({
+        name: "Admin",
+        email: email
+      })
+    );
+    window.location.href = "dashboard.html";
+  } else {
+    document.getElementById("error").innerText = "Invalid login";
   }
 }
 </script>
+
 <script src="auth.js"></script>
+<script src="script.js"></script>
 </body>
 </html>

@@ -269,3 +269,19 @@ function logout(){
   window.location.href="login.html";
 }
 
+
+const authArea = document.getElementById("authArea");
+const isLoggedIn = localStorage.getItem("loggedIn");
+const user = JSON.parse(localStorage.getItem("user") || "{}");
+
+if (isLoggedIn) {
+  authArea.innerHTML = `
+    <li>👋 ${user.name || "User"}</li>
+    <li><button onclick="logout()">Logout</button></li>
+  `;
+} else {
+  authArea.innerHTML = `
+    <li><a href="login.html">Login</a></li>
+  `;
+}
+

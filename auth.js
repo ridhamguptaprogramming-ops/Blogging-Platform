@@ -1,28 +1,38 @@
+/* =========================
+   SIGNUP
+========================= */
 function signup() {
-  const name = document.getElementById("signupName").value;
-  const email = document.getElementById("signupEmail").value;
-  const password = document.getElementById("signupPassword").value;
+  const name = document.getElementById("signupName").value.trim();
+  const email = document.getElementById("signupEmail").value.trim();
+  const password = document.getElementById("signupPassword").value.trim();
 
   if (!name || !email || !password) {
     alert("Please fill all fields");
     return;
   }
 
-  const user = { name, email, password };
-  localStorage.setItem("user", JSON.stringify(user));
+  const user = {
+    name,
+    email,
+    password
+  };
 
-  alert("Signup successful!");
+  localStorage.setItem("user", JSON.stringify(user));
+  alert("Signup successful! Please login.");
   window.location.href = "login.html";
 }
 
+/* =========================
+   LOGIN
+========================= */
 function login() {
-  const email = document.getElementById("loginEmail").value;
-  const password = document.getElementById("loginPassword").value;
+  const email = document.getElementById("loginEmail").value.trim();
+  const password = document.getElementById("loginPassword").value.trim();
 
   const savedUser = JSON.parse(localStorage.getItem("user"));
 
   if (!savedUser) {
-    alert("No user found. Please sign up.");
+    alert("No user found. Please sign up first.");
     return;
   }
 
@@ -35,46 +45,19 @@ function login() {
   }
 }
 
+/* =========================
+   LOGOUT
+========================= */
 function logout() {
   localStorage.removeItem("loggedIn");
-  alert("Logged out successfully");
   window.location.href = "login.html";
 }
-// SIGNUP
-function signup() {
-  const name = document.getElementById("signupName").value;
-  const email = document.getElementById("signupEmail").value;
-  const password = document.getElementById("signupPassword").value;
 
-  if (!name || !email || !password) {
-    alert("All fields required");
-    return;
-  }
-
-  const user = { name, email, password };
-  localStorage.setItem("user", JSON.stringify(user));
-  localStorage.setItem("loggedIn", "true");
-
-  window.location.href = "index.html";
-}
-
-// LOGIN
-function login() {
-  const email = document.getElementById("loginEmail").value;
-  const password = document.getElementById("loginPassword").value;
-  const user = JSON.parse(localStorage.getItem("user"));
-
-  if (!user || user.email !== email || user.password !== password) {
-    alert("Invalid login");
-    return;
-  }
-
-  localStorage.setItem("loggedIn", "true");
-  window.location.href = "index.html";
-}
-
-// LOGOUT
-function logout() {
-  localStorage.removeItem("loggedIn");
-  window.location.reload();
+/* =========================
+   SHOW USER NAME (OPTIONAL)
+========================= */
+const user = JSON.parse(localStorage.getItem("user") || "{}");
+const userNameEl = document.getElementById("userName");
+if (userNameEl) {
+  userNameEl.innerText = user.name || "Guest";
 }
