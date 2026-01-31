@@ -246,6 +246,8 @@ input[type="file"]::file-selector-button:hover {
   <ul class="nav-links">
     <li><a href="dashboard.html">Dashboard</a></li>
     <li><a href="blogs.html">Blogs</a></li>
+    <body data-protected="true">
+    <li><a href="index.html">Home</a></li>
   </ul>
 </nav>
 
@@ -482,6 +484,12 @@ document.getElementById("tags").addEventListener("input", saveDraft);
 /* INIT */
 loadDraft();
 updateStats();
+if (document.body.dataset.protected === "true") {
+  if (!localStorage.getItem("loggedIn")) {
+    window.location.href = "login.html";
+  }
+}
+
 </script>
 
 </body>
