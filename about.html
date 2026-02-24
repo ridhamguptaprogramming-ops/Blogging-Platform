@@ -426,6 +426,72 @@
       color: #b45309;
     }
 
+    .court-tracker {
+      margin-top: 12px;
+      border-color: #f8c892;
+      background: linear-gradient(145deg, #fff2dc, #fffbf5);
+    }
+
+    .score-wrap {
+      margin-bottom: 14px;
+    }
+
+    .score-meter {
+      width: 100%;
+      height: 10px;
+      background: #fde7cb;
+      border-radius: 999px;
+      overflow: hidden;
+      border: 1px solid #f4c995;
+    }
+
+    .score-bar {
+      height: 100%;
+      width: 0;
+      background: linear-gradient(135deg, #f59e0b, #ea580c);
+      transition: width 0.25s ease;
+    }
+
+    .score-text {
+      margin-top: 8px;
+      color: #7c2d12;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .tracker-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .tracker-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      border: 1px solid #f3cfa3;
+      border-radius: 10px;
+      padding: 10px;
+      background: rgba(255, 255, 255, 0.82);
+      color: #78350f;
+      font-size: 0.88rem;
+      line-height: 1.45;
+      cursor: pointer;
+    }
+
+    .tracker-item input {
+      margin-top: 2px;
+      accent-color: #ea580c;
+    }
+
+    .court-verdict {
+      margin-top: 12px;
+      color: #78350f;
+      font-size: 0.88rem;
+      font-weight: 600;
+      min-height: 1rem;
+    }
+
     .newsletter {
       max-width: 1200px;
       margin: 0 auto;
@@ -594,7 +660,8 @@
       }
 
       .values-grid,
-      .court-grid {
+      .court-grid,
+      .tracker-grid {
         grid-template-columns: 1fr;
       }
 
@@ -834,6 +901,51 @@
       </div>
     </section>
 
+    <section class="court-section" id="courtTracker">
+      <div class="court-wrap court-tracker">
+        <h2>Publishing Court Tracker</h2>
+        <p class="intro">
+          Score your draft before publishing. Complete checks to raise your readiness score and improve post quality.
+        </p>
+
+        <div class="score-wrap" aria-live="polite">
+          <div class="score-meter">
+            <div class="score-bar" id="courtScoreBar"></div>
+          </div>
+          <p class="score-text" id="courtScoreText">Court Score: 0 / 100</p>
+        </div>
+
+        <div class="tracker-grid">
+          <label class="tracker-item">
+            <input type="checkbox" class="court-check" data-points="20">
+            <span>Headline is specific and outcome-driven.</span>
+          </label>
+          <label class="tracker-item">
+            <input type="checkbox" class="court-check" data-points="15">
+            <span>Introduction clearly states reader pain/problem.</span>
+          </label>
+          <label class="tracker-item">
+            <input type="checkbox" class="court-check" data-points="20">
+            <span>Post includes at least 3 practical examples.</span>
+          </label>
+          <label class="tracker-item">
+            <input type="checkbox" class="court-check" data-points="15">
+            <span>Sections are scannable with useful subheadings.</span>
+          </label>
+          <label class="tracker-item">
+            <input type="checkbox" class="court-check" data-points="15">
+            <span>Tags/metadata align with search intent.</span>
+          </label>
+          <label class="tracker-item">
+            <input type="checkbox" class="court-check" data-points="15">
+            <span>Ending includes a clear next-step CTA.</span>
+          </label>
+        </div>
+
+        <p class="court-verdict" id="courtVerdict">Verdict: start completing checks.</p>
+      </div>
+    </section>
+
     <section class="newsletter" aria-labelledby="newsletterTitle">
       <div class="newsletter-box">
         <div>
@@ -896,11 +1008,16 @@
   <script>
     const menuBtn = document.getElementById("menuBtn");
     const navLinks = document.getElementById("navLinks");
+    const navItems = navLinks ? navLinks.querySelectorAll("a") : [];
     const authArea = document.getElementById("authArea");
     const newsletterForm = document.getElementById("newsletterForm");
     const newsletterName = document.getElementById("newsletterName");
     const newsletterEmail = document.getElementById("newsletterEmail");
     const newsletterFeedback = document.getElementById("newsletterFeedback");
+    const courtChecks = document.querySelectorAll(".court-check");
+    const courtScoreBar = document.getElementById("courtScoreBar");
+    const courtScoreText = document.getElementById("courtScoreText");
+    const courtVerdict = document.getElementById("courtVerdict");
     const scrollTopBtn = document.getElementById("scrollTop");
     const yearEl = document.getElementById("year");
 
@@ -912,6 +1029,62 @@
         menuBtn.setAttribute("aria-expanded", String(!expanded));
         navLinks.classList.toggle("active");
       });
+
+      navItems.forEach((link) => {
+        link.addEventListener("click", () => {
+          navLinks.classList.remove("active");
+          menuBtn.setAttribute("aria-expanded", "false");
+        });
+      });
+    }
+
+    function updateCourtScore() {
+      let score = 0;
+      const states = [];
+
+      courtChecks.forEach((check, index) => {
+        if (check.checked) {
+          score += Number(check.dataset.points || 0);
+          states.push(index);
+        }
+      });
+
+      score = Math.min(100, score);
+      if (courtScoreBar) courtScoreBar.style.width = score + "%";
+      if (courtScoreText) courtScoreText.textContent = "Court Score: " + score + " / 100";
+
+      if (courtVerdict) {
+        if (score >= 85) {
+          courtVerdict.textContent = "Verdict: approved for publish.";
+        } else if (score >= 60) {
+          courtVerdict.textContent = "Verdict: close, refine a few sections.";
+        } else {
+          courtVerdict.textContent = "Verdict: improve clarity and value before publishing.";
+        }
+      }
+
+      localStorage.setItem("aboutCourtChecks", JSON.stringify(states));
+    }
+
+    function loadCourtScoreState() {
+      const saved = localStorage.getItem("aboutCourtChecks");
+      if (!saved) {
+        updateCourtScore();
+        return;
+      }
+
+      try {
+        const states = JSON.parse(saved);
+        if (Array.isArray(states)) {
+          courtChecks.forEach((check, index) => {
+            check.checked = states.includes(index);
+          });
+        }
+      } catch (error) {
+        localStorage.removeItem("aboutCourtChecks");
+      }
+
+      updateCourtScore();
     }
 
     function renderAuth() {
@@ -942,6 +1115,8 @@
     }
 
     renderAuth();
+    courtChecks.forEach((check) => check.addEventListener("change", updateCourtScore));
+    loadCourtScoreState();
 
     if (newsletterForm) {
       newsletterForm.addEventListener("submit", (event) => {
